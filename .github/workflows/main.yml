@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
-    
+   
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -33,6 +33,27 @@ jobs:
   lint_js:
     name: Lint JavaScript Files
     runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18  # 使用最新的LTS版本
+
+    - name: Install dependencies (server)
+      run: |
+        cd server
+        npm install
+
+    - name: Run Linter (server)
+      run: |
+        cd server
+        npx eslint database/**/*.js
+        echo "Linted all the server js files successfully"
+
 
     steps:
     - name: Checkout Repository
