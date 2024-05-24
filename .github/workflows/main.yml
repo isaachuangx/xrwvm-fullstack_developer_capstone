@@ -41,7 +41,7 @@ jobs:
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 18  # 使用最新的LTS版本
+        node-version: 18 
 
     - name: Install dependencies (server)
       run: |
