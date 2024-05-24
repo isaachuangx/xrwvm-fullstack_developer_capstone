@@ -47,7 +47,7 @@ jobs:
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 14
+        node-version: 16 # 使用支持 ??= 语法的最新版本
 
     - name: Install Dependencies
       run: |
