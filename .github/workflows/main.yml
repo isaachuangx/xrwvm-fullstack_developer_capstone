@@ -41,13 +41,26 @@ jobs:
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 18  # <--- 更新到最新的LTS版本
+        node-version: 18  # 使用最新的LTS版本
 
-    - name: Install dependencies
+    - name: Install dependencies (server)
       run: |
+        cd server
         npm install
 
-    - name: Run Linter
+    - name: Install dependencies (frontend)
       run: |
-        npx eslint server/database/**/*.js
-        echo "Linted all the js files successfully"
+        cd server/frontend
+        npm install
+
+    - name: Run Linter (server)
+      run: |
+        cd server
+        npm run lint
+        echo "Linted all the server js files successfully"
+
+    - name: Run Linter (frontend)
+      run: |
+        cd server/frontend
+        npm run lint
+        echo "Linted all the frontend js files successfully"
