@@ -52,6 +52,7 @@ jobs:
 
       - name: Run Linter
         run: |
+          cd server
           echo "Running JSHint linter..."
           find . -name "*.js" -exec jshint {} +
           echo "Linted all the JavaScript files successfully"
