@@ -1,6 +1,7 @@
 import React from 'react';
 import "../assets/style.css";
 import "../assets/bootstrap.min.css";
+import { Link } from 'react-router-dom'; // <--- 新增导入
 
 const Header = () => {
     const logout = async (e) => {
@@ -35,6 +36,11 @@ if ( curr_user !== null &&  curr_user !== "") {
       <text className='username'>{sessionStorage.getItem("username")}</text>
     <a className="nav_item" href="/djangoapp/logout" onClick={logout}>Logout</a>
   </div>
+} else {
+  home_page_items = <div className="input_panel"> {/* <--- 新增 else 块 */}
+    <Link className="nav_item" to="/login">Login</Link> {/* <--- 修改行 */}
+    <Link className="nav_item" to="/register">Register</Link> {/* <--- 修改行 */}
+  </div>
 }
     return (
         <div>
@@ -47,18 +53,18 @@ if ( curr_user !== null &&  curr_user !== "") {
               <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" style={{fontSize: "larger"}} aria-current="page" href="/">Home</a>
+                    <Link className="nav-link active" style={{fontSize: "larger"}} aria-current="page" to="/">Home</Link> {/* <--- 修改行 */}
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" style={{fontSize: "larger"}} href="/about">About Us</a>
+                    <Link className="nav-link" style={{fontSize: "larger"}} to="/about">About Us</Link> {/* <--- 修改行 */}
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" style={{fontSize: "larger"}} href="/contact">Contact Us</a>
+                  <Link className="nav-link" style={{fontSize: "larger"}} to="/contact">Contact Us</Link> {/* <--- 修改行 */}
                   </li>
                 </ul>
                 <span class="navbar-text">
                   <div class="loginlink" id="loginlogout">
-                  {home_page_items}
+                    {home_page_items} {/* <--- 修改了这一行 */}
                   </div>
                   </span>
               </div>
