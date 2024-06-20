@@ -19,6 +19,7 @@ urlpatterns = [
         view=views.get_dealerships,
         name='get_dealers_by_state'
     ),
+    # path for add a review view
     path(route='add_review', view=views.add_review, name='add_review'),
     path(
         'dealer/<int:dealer_id>/',
@@ -27,14 +28,18 @@ urlpatterns = [
     ),
 
     # 添加获取经销商评论的路径
+    # path for dealer reviews view
     path(
         'reviews/dealer/<int:dealer_id>/',
         views.get_dealer_reviews,
         name='dealer_reviews'
     ),
 
-    # path for dealer reviews view
-
-    # path for add a review view
+    #path to get car inventory
+    path(
+        'inventory/',  # 访问路径，例如 /inventory/?dealer_id=1&make=Toyota
+        views.get_inventory,
+        name='get_inventory'
+    ),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

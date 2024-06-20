@@ -1,3 +1,10 @@
+/* 新增导航栏样式 */
+.navbar {
+  background-color: gray; /* 设置导航栏背景颜色为灰色 */
+  height: 1in; /* 设置导航栏高度 */
+}
+
+/* 现有样式 */
 img{
   width: 60%;
   align-self: center;

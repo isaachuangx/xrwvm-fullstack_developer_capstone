@@ -52,6 +52,11 @@ urlpatterns = [
         )
     ),
     path(
+        'inventory/<int:dealer_id>/', TemplateView.as_view(
+            template_name="index.html"
+        )
+    ),  # 添加 SearchCars 路径
+    path(
         'manifest.json', RedirectView.as_view(
             url='/static/manifest.json', permanent=True
         )

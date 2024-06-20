@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json()); // 使用 express 内置的中间件来解析 JSON
 
 // [改进1: 数据库连接增加错误处理和配置]
-mongoose.connect("mongodb://mongo_db:27017/dealershipsDB", {
+mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {

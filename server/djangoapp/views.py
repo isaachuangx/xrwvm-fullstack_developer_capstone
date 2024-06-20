@@ -8,7 +8,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from .populate import initiate
 from .models import CarMake, CarModel
-from .restapis import get_request, analyze_review_sentiments, post_review
+from .restapis import get_request, analyze_review_sentiments, post_review, searchcars_request
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -35,6 +35,49 @@ def get_cars(request):
             {"CarModels": [], "error": "Failed to fetch car models"},
             status=500
         )
+
+def get_inventory(request):
+    # 从请求参数中获取'dealer_id'
+    dealer_id = request.GET.get('dealer_id', None)
+    
+    # 检查'dealer_id'是否存在，如果不存在则返回400错误
+    if not dealer_id:
+        return JsonResponse({"status": 400, "message": "Bad request. 'dealer_id' parameter is required."})
+    
+    # 获取其他可能的参数
+    make = request.GET.get('make', None)
+    model = request.GET.get('model', None)
+    max_mileage = request.GET.get('max_mileage', None)
+    price = request.GET.get('price', None)
+    year = request.GET.get('year', None)
+
+    try:
+        # 构建不同的endpoint和参数
+        if make:
+            endpoint = f"/carsbymake/{dealer_id}/{make}"
+        elif model:
+            endpoint = f"/carsbymodel/{dealer_id}/{model}"
+        elif max_mileage:
+            endpoint = f"/carsbymaxmileage/{dealer_id}/{max_mileage}"
+        elif price:
+            endpoint = f"/carsbyprice/{dealer_id}/{price}"
+        elif year:
+            endpoint = f"/carsbyyear/{dealer_id}/{year}"
+        else:
+            endpoint = f"/cars/{dealer_id}"
+
+        # 调用 searchcars_request 函数从 API 获取库存数据
+        cars_inventory = searchcars_request(endpoint)
+        
+        # 检查是否获取到库存数据
+        if cars_inventory:
+            return JsonResponse({"status": 200, "inventory": cars_inventory})
+        else:
+            return JsonResponse({"status": 404, "message": "No inventory found for the given dealer_id."})
+    except Exception as e:
+        # 处理异常，记录错误日志并返回500状态
+        logger.error(f"Error fetching inventory: {e}", exc_info=True)
+        return JsonResponse({"status": 500, "message": "Internal server error"})
 
 
 @csrf_exempt

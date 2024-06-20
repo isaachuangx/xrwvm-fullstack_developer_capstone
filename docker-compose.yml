@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  mongo_db_inventory:
+    image: mongo:latest
+    container_name: mongo_inventory_container
+    ports:
+      - 27018:27017
+    restart: always
+    volumes:
+      - mongo_inventory_data:/data/db
+
+  mongo_db_dealership:
+    image: mongo:latest
+    container_name: mongo_dealership_container
+    ports:
+      - 27019:27017
+    restart: always
+    volumes:
+      - mongo_dealership_data:/data/db
+
+  api_inventory:
+    build:
+      context: ./server/carsInventory
+    container_name: api_inventory_container
+    ports:
+      - 3050:3050
+    depends_on:
+      - mongo_db_inventory
+    environment:
+      - MONGO_URL=mongodb://mongo_db_inventory:27017/carsInventoryDB
+
+  api_dealership:
+    build:
+      context: ./server/database
+    container_name: api_dealership_container
+    ports:
+      - 3030:3030
+    depends_on:
+      - mongo_db_dealership
+    environment:
+      - MONGO_URL=mongodb://mongo_db_dealership:27017/dealershipsDB
+
+volumes:
+  mongo_inventory_data: {}
+  mongo_dealership_data: {}

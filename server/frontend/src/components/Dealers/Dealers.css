@@ -53,13 +53,15 @@ table{
     overflow-wrap: normal;
     margin-top: 1cm;
     align-items: flex-start;
+    border: solid purple;
   }
 
   .reviewer {
     margin: 10px; /* Optional margin for spacing */
     font-style: italic;
     color: gray;
-    font-size: small;
+    font-size: 18px;
+    text-align: center;
 }
 
 .review {
@@ -85,4 +87,5 @@ table{
 .review_icon:hover {
   transform: scale(1.1);
   border: solid lightgray;
+  border: 2px solid #080808;
 }
